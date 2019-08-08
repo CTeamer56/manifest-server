@@ -62,14 +62,14 @@ const client = new plaid.Client(
 );
 
 app.get('/users/:auth0_id', (req, res) => {
-  const { auth0_id } = req.params
+  const { auth0_id } = req.params;
   User.findAll({ where: { auth0_id }})
     .then(data => {
       return data.length 
         ? res.staus(204).send("Not Found") 
         : res.status(200).send(data);
     })
-    .catch(err => res.status(500))
+    .catch(() => res.status(500).send("Whoops, try again in a few!"));
 });
 
 app.post('/users', (req, res) => {
